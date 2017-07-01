@@ -53,6 +53,7 @@ class StartWorkerCommand extends ContainerAwareCommand
         }
 
         $env['APP_INCLUDE'] = $this->getContainer()->getParameter('resque.app_include');
+
         $env['COUNT'] = $input->getOption('count');
         $env['INTERVAL'] = $input->getOption('interval');
         $env['QUEUE'] = $input->getArgument('queues');

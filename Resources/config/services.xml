@@ -15,17 +15,29 @@
     </parameters>
 
     <services>
-        <service id="resque" class="%resque.class%" lazy="true">
+        <service id="resque" class="%resque.class%">
             <argument type="collection">
                 <argument key="kernel.root_dir">%resque.worker.root_dir%</argument>
                 <argument key="kernel.debug">%kernel.debug%</argument>
                 <argument key="kernel.environment">%kernel.environment%</argument>
             </argument>
+            <argument type="service" id="resque.factory.worker" />
+            <argument type="service" id="resque.factory.queue" />
             <call method="setRedisConfiguration">
                 <argument>%resque.redis.host%</argument>
                 <argument>%resque.redis.port%</argument>
                 <argument>%resque.redis.database%</argument>
             </call>
+        </service>
+        <service id="resque.factory.job" class="ResqueBundle\Resque\Factory\JobFactory">
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="resque.factory.worker" class="ResqueBundle\Resque\Factory\WorkerFactory">
+            <argument type="service" id="resque.factory.job" />
+        </service>
+
+        <service id="resque.factory.queue" class="ResqueBundle\Resque\Factory\QueueFactory">
+            <argument type="service" id="resque.factory.job" />
         </service>
     </services>
 </container>

@@ -2,6 +2,8 @@
 
 namespace ResqueBundle\Resque;
 
+use ResqueBundle\Resque\Factory\JobFactory;
+
 /**
  * Class Queue
  * @package ResqueBundle\Resque
@@ -13,9 +15,15 @@ class Queue
      */
     private $name;
 
-    public function __construct($name)
+    /**
+     * @var JobFactory
+     */
+    private $jobFactory;
+
+    public function __construct($name, JobFactory $jobFactory)
     {
         $this->name = $name;
+        $this->jobFactory = $jobFactory;
     }
 
     /**
@@ -45,8 +53,7 @@ class Queue
 
         $result = [];
         foreach ($jobs as $job) {
-            $job = new \Resque_Job($this->name, \json_decode($job, TRUE));
-            $result[] = $job->getInstance();
+            $result[] = $this->jobFactory->create(\json_decode($job, TRUE), $this->name);
         }
 
         return $result;

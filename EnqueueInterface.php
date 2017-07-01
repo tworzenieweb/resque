@@ -8,30 +8,30 @@ namespace ResqueBundle\Resque;
 interface EnqueueInterface
 {
     /**
-     * @param Job $job
+     * @param JobDto $job
      * @param bool $trackStatus
      * @return mixed
      */
-    public function enqueue(Job $job, $trackStatus = FALSE);
+    public function enqueue(JobDto $job, $trackStatus = FALSE);
 
     /**
-     * @param Job $job
+     * @param JobDto $job
      * @param bool $trackStatus
      * @return mixed
      */
-    public function enqueueOnce(Job $job, $trackStatus = FALSE);
+    public function enqueueOnce(JobDto $job, $trackStatus = FALSE);
 
     /**
      * @param $at
-     * @param Job $job
+     * @param JobDto $job
      * @return mixed
      */
-    public function enqueueAt($at, Job $job);
+    public function enqueueAt($at, JobDto $job);
 
     /**
      * @param $in
-     * @param Job $job
+     * @param JobDto $job
      * @return mixed
      */
-    public function enqueueIn($in, Job $job);
+    public function enqueueIn($in, JobDto $job);
 }

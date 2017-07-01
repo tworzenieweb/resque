@@ -60,10 +60,10 @@ abstract class Job
     /**
      * This is the method that is called when the job is run
      *
-     * @param $args
+     * @param $message
      * @return mixed
      */
-    abstract public function run($args);
+    abstract public function run($message);
 
     /**
      * Default function used to tear down, can be overloaded by individual Jobs

@@ -20,6 +20,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('resque');
 
+
+        if (PHP_VERSION_ID < 70000) {
+            $defaultAppInclude = '%kernel.root_dir%/../var/bootstrap.php.cache';
+        } else {
+            $defaultAppInclude = null;
+        }
+
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
@@ -29,8 +36,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Set the vendor dir')
                 ->end()
                 ->scalarNode('app_include')
-                    ->defaultValue('%kernel.root_dir%/../var/bootstrap.php.cache')
-                    ->cannotBeEmpty()
+                    ->defaultValue($defaultAppInclude)
                     ->info('Set the APP_INCLUDE for php-resque')
                 ->end()
                 ->scalarNode('prefix')

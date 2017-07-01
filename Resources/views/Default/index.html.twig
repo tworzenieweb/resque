@@ -35,9 +35,9 @@
 
             </table>
 
-        <h2>{{ resque.numberOfWorkingWorkers }} of {{ resque.numberOfWorkers }} Workers Working</h2>
+        {#<h2>{{ resque.numberOfWorkingWorkers }} of {{ resque.numberOfWorkers }} Workers Working</h2>#}
         <p class="lead">The list below contains all workers which are currently running a job.</p>
-        {% include "ResqueBundle:Default:workers.table.html.twig" with {workers: resque.runningWorkers } %}
+        {#{% include "ResqueBundle:Default:workers.table.html.twig" with {workers: resque.runningWorkers } %}#}
 
         <h2>Redis</h2>
         <table class="table table-bordered table-striped">

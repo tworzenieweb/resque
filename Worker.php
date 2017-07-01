@@ -2,6 +2,9 @@
 
 namespace ResqueBundle\Resque;
 
+use Resque_Worker;
+use ResqueBundle\Resque\Factory\JobFactory;
+
 /**
  * Class Worker
  * @package ResqueBundle\Resque
@@ -9,17 +12,24 @@ namespace ResqueBundle\Resque;
 class Worker
 {
     /**
-     * @var \Resque_Worker
+     * @var Resque_Worker
      */
     protected $worker;
 
     /**
-     * Worker constructor.
-     * @param \Resque_Worker $worker
+     * @var JobFactory
      */
-    public function __construct(\Resque_Worker $worker)
+    private $jobFactory;
+
+    /**
+     * Worker constructor.
+     * @param Resque_Worker $worker
+     * @param JobFactory $jobFactory
+     */
+    public function __construct(Resque_Worker $worker, JobFactory $jobFactory)
     {
         $this->worker = $worker;
+        $this->jobFactory = $jobFactory;
     }
 
     /**
@@ -91,13 +101,11 @@ class Worker
             return NULL;
         }
 
-        $job = new \Resque_Job($job['queue'], $job['payload']);
-
-        return $job->getInstance();
+        return $this->jobFactory->create($job['queue'], $job['payload']);
     }
 
     /**
-     * @return \Resque_Worker
+     * @return Resque_Worker
      */
     public function getWorker()
     {

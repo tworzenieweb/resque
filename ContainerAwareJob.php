@@ -41,6 +41,7 @@ abstract class ContainerAwareJob extends Job
     protected function getContainer()
     {
         if ($this->kernel === NULL) {
+            echo "I was created";
             $this->kernel = $this->createKernel();
             $this->kernel->boot();
         }
